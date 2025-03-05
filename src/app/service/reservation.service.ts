@@ -16,11 +16,8 @@ export class ReservationService {
     return this.http.post<Reservation>(this.apiUrl, reservation);
   }
 
-  checkExistingReservation(document: string): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(`${this.apiUrl}?document=${document}`);
-  }
-
   getAllReservations(): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(this.apiUrl);
   }
+
 }

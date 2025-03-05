@@ -28,7 +28,7 @@
             <td>{{ reservation.document }}</td>
             <td>{{ reservation.firstName }}</td>
             <td>{{ reservation.lastName }}</td>
-            <td>{{ reservation.departureDate | date:'yyyy-MM-dd HH:mm' }}</td>
+            <td>{{ reservation.departureDate| date:'yyyy-MM-dd HH:mm' }}</td>
           </tr>
           <tr *ngIf="reservations.length === 0">
             <td colspan="5" class="no-data">No hay reservas disponibles</td>
