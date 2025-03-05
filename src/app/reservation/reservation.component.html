@@ -1,0 +1,78 @@
+
+<div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h2>Reservas Bus</h2>
+      </div>
+      <div class="card-body">
+       
+        <form [formGroup]="searchForm" (ngSubmit)="buscarServicios()" class="mb-4">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="origen">Origen</label>
+              <select id="origen" formControlName="origen" class="form-control">
+                <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">{{ ciudad.city }}</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="destino">Destino</label>
+              <select id="destino" formControlName="destino" class="form-control">
+                <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">{{ ciudad.city }}</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="fecha">Fecha Ida</label>
+              <input type="date" id="fecha" formControlName="fecha" class="form-control">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3" [disabled]="searchForm.invalid || searchForm.hasError('sameOriginAndDestination')">Buscar</button>
+          <div *ngIf="searchForm.hasError('sameOriginAndDestination')" class="text-danger mt-2">
+            El origen y el destino no pueden ser iguales.
+          </div>
+        </form>
+  
+      
+        <form [formGroup]="reservationForm" (ngSubmit)="confirmarReserva()" *ngIf="serviciosDisponibles.length > 0">
+          <div class="form-group">
+            <label for="servicio">Seleccionar Servicio</label>
+            <select id="servicio" formControlName="servicio" class="form-control">
+              <option *ngFor="let servicio of serviciosDisponibles" [value]="servicio.id">
+                Partida: {{ servicio.departureDate }} {{ servicio.departureTime }} - Llegada: {{ servicio.arrivalDate }} {{ servicio.arrivalTime }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="document">Documento</label>
+            <input type="text" id="document" formControlName="document" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="firstName">Nombre</label>
+            <input type="text" id="firstName" formControlName="firstName" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="lastName">Apellido</label>
+            <input type="text" id="lastName" formControlName="lastName" class="form-control">
+          </div>
+          <div formArrayName="passengers">
+            <div *ngFor="let pasajero of pasajeros.controls; let i = index" [formGroupName]="i" class="mb-3">
+              <h5>Pasajero {{ i + 1 }}</h5>
+              <div class="form-group">
+                <label for="document{{i}}">Documento</label>
+                <input type="text" id="document{{i}}" formControlName="document" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="firstName{{i}}">Nombre</label>
+                <input type="text" id="firstName{{i}}" formControlName="firstName" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="lastName{{i}}">Apellido</label>
+                <input type="text" id="lastName{{i}}" formControlName="lastName" class="form-control">
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary" (click)="agregarPasajero()">Agregar Pasajero</button>
+          <button type="submit" class="btn btn-success ml-2" [disabled]="reservationForm.invalid">Confirmar Reserva</button>
+        </form>
+      </div>
+    </div>
+  </div>

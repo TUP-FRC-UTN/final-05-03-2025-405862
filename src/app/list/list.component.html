@@ -1,0 +1,39 @@
+<div class="reservation-container">
+    <div class="header">
+      <h2>Listado de Reservas</h2>
+    </div>
+  
+    <div *ngIf="loading" class="loading">
+      <p>Cargando reservas...</p>
+    </div>
+  
+    <div *ngIf="error" class="error">
+      <p>{{ error }}</p>
+    </div>
+  
+    <div *ngIf="!loading && !error" class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Código de Reserva</th>
+            <th>Documento</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Fecha y Hora Partida</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reservation of reservations">
+            <td>{{ reservation.reservationCode }}</td>
+            <td>{{ reservation.document }}</td>
+            <td>{{ reservation.firstName }}</td>
+            <td>{{ reservation.lastName }}</td>
+            <td>{{ reservation.departureDate | date:'yyyy-MM-dd HH:mm' }}</td>
+          </tr>
+          <tr *ngIf="reservations.length === 0">
+            <td colspan="5" class="no-data">No hay reservas disponibles</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
